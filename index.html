@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="web-app/css/test.css"></link>
+  </head>
+  <body>
+
+    <div id="container"><form>
+      <span class="status"><span></span></span>
+      <input type="text" value="">
+      <select>
+        <option>Valg4</option>
+        <option>Valg2</option>
+      </select>
+      <button type="button" class="saveBtn">Lagre</button>
+    </form></div>
+
+    <script src="web-app/js/external/jquery.js"></script>
+    <script src="web-app/js/dirty-fields.js"></script>
+    <script src="web-app/js/form-list.js"></script>
+    <script src="web-app/js/form-cloner.js"></script>
+    <script src="web-app/js/form-status.js"></script>
+
+    <script>
+      (function () {
+        $('.saveBtn').click(function (evt) {
+          // do the save and finally if everything ok:
+          $(evt.target).trigger("saved");
+        });
+
+        var buildForm = function () {
+          var template = $("#container form")[0];
+          var form = sfk.cloneForm(template);
+          
+          sfk.setupDirtyFields(form);
+
+          var statusElement = $(form).find("span.status span")[0];
+          sfk.setupFormStatus(form, statusElement);
+
+          return form;
+        };
+
+        $("#container form").each(function () {
+          sfk.setupDirtyFields(this); 
+          var statusElement = $(this).find("span.status span")[0];
+          sfk.setupFormStatus(this, statusElement);
+        });
+
+        var container = document.getElementById("container");
+        sfk.setupFormList(container, buildForm);
+
+
+      }());
+    </script>
+
+  </body>
+</html>
