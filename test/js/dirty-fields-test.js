@@ -1,24 +1,14 @@
 (function (S) {
   "use strict";
 
+  var e = cull.dom.el;
+
   buster.testCase("Dirty Fields", {
     setUp: function () {
-      this.element = document.createElement("div");
-      this.input = document.createElement("input");
-      this.select = document.createElement("select");
 
-      
-      this.selectOption = document.createElement("option");
-      this.selectOption.appendChild(document.createTextNode('Option1'));
-      this.select.appendChild(this.selectOption);
-
-      this.selectOption2 = document.createElement("option");
-      this.selectOption2.appendChild(document.createTextNode('Option2'));
-      this.select.appendChild(this.selectOption2); 
-
-
-      this.element.appendChild(this.input);
-      this.element.appendChild(this.select);
+      this.input = e.input();
+      this.select = e.select([e.option("Option1"), e.option("Option2")]);
+      this.element = e.div([this.input, this.select]);
 
       sfk.setupDirtyFields(this.element);
 

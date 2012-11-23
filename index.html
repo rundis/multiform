@@ -10,7 +10,7 @@
       <span class="status"><span></span></span>
       <input type="text" value="">
       <select>
-        <option>Valg4</option>
+        <option>Valg3</option>
         <option>Valg2</option>
       </select>
       <button type="button" class="saveBtn">Lagre</button>
@@ -24,10 +24,7 @@
 
     <script>
       (function () {
-        $('.saveBtn').click(function (evt) {
-          // do the save and finally if everything ok:
-          $(evt.target).trigger("saved");
-        });
+        
 
         var buildForm = function () {
           var template = $("#container form")[0];
@@ -38,6 +35,11 @@
           var statusElement = $(form).find("span.status span")[0];
           sfk.setupFormStatus(form, statusElement);
 
+          $(form).find('.saveBtn').click(function (evt) {
+            // do the save and finally if everything ok:
+            $(evt.target).trigger("saved");
+          });
+
           return form;
         };
 
@@ -45,6 +47,11 @@
           sfk.setupDirtyFields(this); 
           var statusElement = $(this).find("span.status span")[0];
           sfk.setupFormStatus(this, statusElement);
+
+          $(this).find('.saveBtn').click(function (evt) {
+            // do the save and finally if everything ok:
+            $(evt.target).trigger("saved");
+          });
         });
 
         var container = document.getElementById("container");
