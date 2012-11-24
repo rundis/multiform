@@ -7,13 +7,13 @@
   <body>
 
     <div id="container"><form>
-      <span class="status"><span></span></span>
-      <input type="text" value="">
-      <select>
-        <option>Valg3</option>
-        <option>Valg2</option>
-      </select>
-      <button type="button" class="saveBtn">Lagre</button>
+        <span class="status"><span></span></span>
+        <input type="text" value="">
+        <select>
+          <option>Valg3</option>
+          <option>Valg2</option>
+        </select>
+        <button type="button" class="saveBtn">Lagre</button>
     </form></div>
 
     <script src="web-app/js/external/jquery.js"></script>
@@ -24,39 +24,34 @@
 
     <script>
       (function () {
-        
 
-        var buildForm = function () {
-          var template = $("#container form")[0];
-          var form = sfk.cloneForm(template);
-          
-          sfk.setupDirtyFields(form);
+          var setupForm = function(form) {
+              sfk.setupDirtyFields(form);
+              var statusElement = $(form).find("span.status span")[0];
+              sfk.setupFormStatus(form, statusElement);
 
-          var statusElement = $(form).find("span.status span")[0];
-          sfk.setupFormStatus(form, statusElement);
+              $(form).find('.saveBtn').click(function (evt) {
+                  console.log("Savebtn clicked");
+                  // do the save and finally if everything ok:
+                  $(evt.target).trigger("saved");
+              });
 
-          $(form).find('.saveBtn').click(function (evt) {
-            // do the save and finally if everything ok:
-            $(evt.target).trigger("saved");
+
+          };
+          var buildForm = function () {
+              var template = $("#container form")[0];
+              var form = sfk.cloneForm(template);
+              setupForm(form);
+
+              return form;
+          };
+
+          $("#container form").each(function () {
+              setupForm(this);
           });
 
-          return form;
-        };
-
-        $("#container form").each(function () {
-          sfk.setupDirtyFields(this); 
-          var statusElement = $(this).find("span.status span")[0];
-          sfk.setupFormStatus(this, statusElement);
-
-          $(this).find('.saveBtn').click(function (evt) {
-            // do the save and finally if everything ok:
-            $(evt.target).trigger("saved");
-          });
-        });
-
-        var container = document.getElementById("container");
-        sfk.setupFormList(container, buildForm);
-
+          var container = document.getElementById("container");
+          sfk.setupFormList(container, buildForm);
 
       }());
     </script>
